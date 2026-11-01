@@ -19,6 +19,14 @@ Fecha: 2026-10-29
 - **Imagen Docker en vez de npm**: Claude Code del Mac lanza `hylian-mcp:local` por stdio. El paquete npm sigue sin
   publicarse; el `bin` y `prepack` quedan como estaban.
 
+- **Una sola base, la del Mac** (2026-11-01): el PC registra el server con `ssh mac-mini docker run …` en vez de
+  apuntar su `.env` al Supabase del Mac por Tailscale. Mismo resultado sin que el PC dependa de alcanzar la base, y
+  el PC usa siempre la imagen deployada. El Supabase local del PC queda solo para desarrollo.
+
 ## Qué queda abierto
 
-- El PC y el Mac Mini tienen cada uno su Supabase local: dos bases separadas hasta que se elija una sola.
+- El CLI de Supabase publica API (54321), Postgres (54322, clave `postgres`) y Studio (54323, sin login) en
+  `0.0.0.0`, sin opción para cambiarlo: el Mac los expone a la LAN y al tailnet. Probado 2026-11-01:
+  `com.docker.network.bridge.host_binding_ipv4=127.0.0.1` en la red del proyecto no tiene efecto en Docker Desktop
+  (solo respeta el `127.0.0.1` declarado por contenedor), y el `ip` global del daemon dejaría en localhost a Home
+  Assistant, Strapi y agriplan, que publican sin IP igual que Supabase.

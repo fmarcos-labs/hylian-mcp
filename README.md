@@ -142,6 +142,15 @@ claude mcp add --scope user hylian-mcp -- "$(command -v docker)" run -i --rm \
   -v ~/.hylian-mcp:/home/appuser/.hylian-mcp hylian-mcp:local
 ```
 
+Desde otra máquina (el PC) se usa el mismo server y la misma base, por SSH (Tailscale): el stdio viaja por la sesión
+y el PC no necesita alcanzar Supabase. Rutas absolutas del Mac, porque el comando corre allá.
+
+```bash
+claude mcp add --scope user hylian-mcp -- ssh -o BatchMode=yes mac-mini \
+  /usr/local/bin/docker run -i --rm --env-file /Users/<usuario>/apps/hylian-mcp/.env -e TZ=America/Santiago \
+  -v /Users/<usuario>/.hylian-mcp:/home/appuser/.hylian-mcp hylian-mcp:local
+```
+
 - [`docs/_CONCEPTO.md`](docs/_CONCEPTO.md) — especificación: dominio, schema, stack.
 - [`docs/backlog/`](docs/backlog/) — fases y estado de implementación.
 - [`docs/decisions/`](docs/decisions/) — por qué el código se aparta del backlog donde lo hace.
