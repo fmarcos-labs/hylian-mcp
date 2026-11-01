@@ -306,7 +306,7 @@ _Respaldo: `src/tools/__tests__/catalog.tool.spec.ts`._
 - `limit` por defecto 20 (máx 100). Sin coincidencias: `{ returned: 0, games: [] }`.
 - Los juegos de Steam no traen tags (solo nombre), y `storeUrl: null`, `description: ""`. Para ver tiempo jugado, `list_my_games`.
 
-_Respaldo: `catalog.tool.spec.ts`, `src/db/__tests__/games-catalog.repository.spec.ts`. La sintaxis `or=(…ilike…)` con `metadata->>tags` no se probó contra un PostgREST real._
+_Respaldo: `catalog.tool.spec.ts`, `src/db/__tests__/games-catalog.repository.spec.ts`. La sintaxis `or=(…ilike…)` con `metadata->>tags` se probó 2026-11-01 contra el PostgREST de Supabase local (búsqueda por tag de un juego manual)._
 
 ---
 
