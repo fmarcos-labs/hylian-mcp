@@ -21,6 +21,9 @@ Fecha: 2026-10-24
   sueltos el match parcial es lo que se espera).
 - Devuelve también `gameId`: sin él `delete_game` (que pide el UUID) no tiene de dónde sacarlo. `list_my_games`
   también devuelve `gameId` por la misma razón.
+- `query` es opcional desde 2026-11-01 (el concepto dice `search_games(query)`): el dueño guarda juegos de Switch,
+  Quest, itch.io y ports de la comunidad para no olvidarlos, y necesita verlos todos sin adivinar un término. Por lo
+  mismo cada resultado trae `storeUrl` y `description` de la metadata manual.
 - **No verificado contra un PostgREST real**: el filtro `or=(name.ilike."…",metadata->>tags.ilike."…")` con valores
   entrecomillados sigue la sintaxis documentada de PostgREST, pero los tests solo comprueban el string generado.
 

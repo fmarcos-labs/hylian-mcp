@@ -19,14 +19,15 @@ export function registerSearchGamesTool(
     {
       title: 'Search Games',
       description:
-        'Searches the catalog (Steam-synced and manual games) by name, tag or genre, case-insensitive and partial. Looks only at what is already in the database — it never calls Steam. Returns { returned, games: [{ gameId, name, source, steamAppId, tags }] }; gameId is what delete_game needs.',
+        'Searches the catalog (Steam-synced and manual games) by name, tag or genre, case-insensitive and partial. Without query it lists the catalog by name: with source "manual" that is every non-Steam game the user saved (Switch, Quest, itch.io, community ports). Looks only at what is already in the database — it never calls Steam. Returns { returned, games: [{ gameId, name, source, steamAppId, tags, storeUrl, description }] }; storeUrl and description are what add_manual_game saved (null and "" for Steam games); gameId is what delete_game needs.',
       inputSchema: {
         query: z
           .string()
           .trim()
           .min(1, 'Query is required')
           .max(MAX_SEARCH_QUERY_LENGTH)
-          .describe('Part of a name, tag or genre'),
+          .optional()
+          .describe('Part of a name, tag or genre; omit to list everything'),
         source: z
           .enum(GAME_SEARCH_SOURCES)
           .default('all')
@@ -59,13 +60,16 @@ export function registerSearchGamesTool(
 
       const found = hits.value.map(
         ({ id, name, source: hitSource, steamAppId, metadata }) => {
-          const { tags, genres } = readManualMetadata(metadata);
+          const { tags, genres, storeUrl, description } =
+            readManualMetadata(metadata);
           return {
             gameId: id,
             name,
             source: hitSource,
             steamAppId,
             tags: [...new Set([...tags, ...genres])],
+            storeUrl,
+            description,
           };
         },
       );

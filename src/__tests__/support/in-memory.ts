@@ -112,8 +112,11 @@ export function createInMemoryBackend() {
       );
     },
     async search({ query, source, limit }) {
-      const needle = query.toLowerCase();
       const matches = (game: StoredGame) => {
+        if (query === undefined) {
+          return true;
+        }
+        const needle = query.toLowerCase();
         const { tags, genres } = readManualMetadata(game.metadata);
         return [game.name, ...tags, ...genres].some((text) =>
           text.toLowerCase().includes(needle),

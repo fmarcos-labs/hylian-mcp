@@ -45,6 +45,24 @@ describe('game repository (catalog)', () => {
       });
     });
 
+    it('applies no name or tag filter when there is no query', async () => {
+      const { client, requests } = createFakeSupabase(() => ({
+        status: 200,
+        body: [row],
+      }));
+
+      const result = await createGameRepository(client).search({
+        source: 'manual',
+        limit: 100,
+      });
+
+      const { searchParams } = requests[0]!.url;
+      expect(searchParams.get('or')).toBeNull();
+      expect(searchParams.get('source')).toBe('eq.manual');
+      expect(searchParams.get('order')).toBe('name.asc');
+      expect(result.ok).toBe(true);
+    });
+
     it('adds a source filter when not searching everything', async () => {
       const { client, requests } = createFakeSupabase(() => ({
         status: 200,

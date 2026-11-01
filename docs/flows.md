@@ -299,14 +299,38 @@ _Respaldo: `src/tools/__tests__/catalog.tool.spec.ts`._
 
 **Resultado esperado:**
 
-- `{ returned, games: [{ gameId, name, source, steamAppId, tags }] }` por coincidencia parcial e insensible a mayúsculas en nombre, tags o géneros. No consulta Steam.
+- `{ returned, games: [{ gameId, name, source, steamAppId, tags, storeUrl, description }] }` por coincidencia parcial e insensible a mayúsculas en nombre, tags o géneros. No consulta Steam.
 
 **Casos borde:**
 
 - `limit` por defecto 20 (máx 100). Sin coincidencias: `{ returned: 0, games: [] }`.
-- Los juegos de Steam no traen tags (solo nombre). Para ver tiempo jugado, `list_my_games`.
+- Los juegos de Steam no traen tags (solo nombre), y `storeUrl: null`, `description: ""`. Para ver tiempo jugado, `list_my_games`.
 
 _Respaldo: `catalog.tool.spec.ts`, `src/db/__tests__/games-catalog.repository.spec.ts`. La sintaxis `or=(…ilike…)` con `metadata->>tags` no se probó contra un PostgREST real._
+
+---
+
+### [Flujo: ver mi banco de juegos no-Steam]
+
+**Precondiciones:**
+
+- Juegos guardados con `add_manual_game`; la plataforma va como tag (`switch`, `quest`, `itch.io`, `comunidad`).
+
+**Pasos:**
+
+1. Usuario: "¿qué juegos tengo guardados fuera de Steam?" / "mostrame mis ports de Quest".
+2. El LLM invoca `search_games` sin `query` y con `source: "manual"`; para una plataforma, `query: "quest"`.
+
+**Resultado esperado:**
+
+- Todos los juegos manuales por nombre, cada uno con su `storeUrl` y la `description` que se guardó.
+
+**Casos borde:**
+
+- Sin `query` y con `source: "all"` lista también los de Steam, por nombre, hasta `limit` (máx 100).
+- `query: ""` se rechaza: para listar todo se omite.
+
+_Respaldo: `catalog.tool.spec.ts`. Probado 2026-11-01 por stdio contra Supabase local (listado sin `query`, campos nuevos, `query` vacía rechazada)._
 
 ---
 

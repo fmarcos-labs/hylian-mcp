@@ -21,6 +21,8 @@ interface SearchBody {
     source: string;
     steamAppId: number | null;
     tags: string[];
+    storeUrl: string | null;
+    description: string;
   }[];
 }
 
@@ -250,6 +252,45 @@ describe('catalog tools', () => {
       const body = await search({ query: 'counter', limit: 1 });
 
       expect(body.returned).toBe(1);
+    });
+
+    it('lists the whole catalog by name when no query is given', async () => {
+      const { search } = await setupWithTunic();
+      const body = await search({});
+
+      const expected = [
+        ...sampleSteamGames().map(({ name }) => name),
+        'Tunic (Switch)',
+      ].sort((a, b) => a.localeCompare(b));
+      expect(body.games.map(({ name }) => name)).toEqual(expected);
+    });
+
+    it('lists only the manual games with no query and source manual', async () => {
+      const { search } = await setupWithTunic();
+      const body = await search({ source: 'manual' });
+
+      expect(body.games.map(({ name }) => name)).toEqual(['Tunic (Switch)']);
+    });
+
+    it('returns the store link and the description saved with the game', async () => {
+      const { client, search } = await setup();
+      await callTool(client, 'add_manual_game', {
+        name: 'Zelda OOT (Quest port)',
+        metadata: {
+          tags: ['quest', 'comunidad'],
+          description: 'Port nativo de Ship of Harkinian para Quest',
+          storeUrl: 'https://github.com/example/soh-quest',
+        },
+      });
+
+      const [manual] = (await search({ query: 'zelda' })).games;
+      const [steam] = (await search({ query: 'hollow' })).games;
+
+      expect(manual).toMatchObject({
+        storeUrl: 'https://github.com/example/soh-quest',
+        description: 'Port nativo de Ship of Harkinian para Quest',
+      });
+      expect(steam).toMatchObject({ storeUrl: null, description: '' });
     });
 
     it('returns an empty list when nothing matches', async () => {

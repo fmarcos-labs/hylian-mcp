@@ -108,7 +108,7 @@ Scaffold corriendo: podés sincronizar tu Steam y escribir reseñas. Single-user
 
 - [ ] Schema SQL ejecutable en Supabase sin errores — verificado en Postgres 17 local; **falta correrlo en tu proyecto Supabase**
 - [x] `pnpm dev` arranca el server sin crash
-- [ ] `sync_library` invocado manualmente trae 1+ juegos de la cuenta Steam real (developer account `76561198020370213` del concepto) — **pendiente: requiere STEAM_API_KEY y Supabase reales**; cubierto con dobles (forma documentada de GetOwnedGames)
+- [x] `sync_library` invocado manualmente trae 1+ juegos de la cuenta Steam real (developer account `76561198020370213` del concepto) — 2026-10-29 contra la Steam Web API real y Supabase local: 219 juegos; el re-sync trae 0 nuevos (`docs/flows.md`)
 - [x] `review_game` guarda reseña y devuelve ID — con dobles (repositorio contra cliente supabase-js real + fetch falso)
 - [x] `list_my_games` devuelve lista filtrable — con dobles
 - [x] Cron se monta en producción pero NO en dev (sin `MCP_CRON_ENABLED`) — verificado en runtime sobre el build

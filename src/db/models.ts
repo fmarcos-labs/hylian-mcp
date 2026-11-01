@@ -70,7 +70,8 @@ export const GAME_SEARCH_SOURCES = ['all', 'steam', 'manual'] as const;
 export type GameSearchSource = (typeof GAME_SEARCH_SOURCES)[number];
 
 export interface GameSearchQuery {
-  query: string;
+  /** Absent = the whole catalog (filtered by source). */
+  query?: string;
   source: GameSearchSource;
   limit: number;
 }

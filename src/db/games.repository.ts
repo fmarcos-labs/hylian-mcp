@@ -77,6 +77,16 @@ function escapeLikePattern(value: string): string {
   return value.replace(/[\\%_]/g, (character) => `\\${character}`);
 }
 
+// Partial, case-insensitive match on the name or inside the tags/genres arrays.
+function nameOrTagFilter(query: string): string {
+  const pattern = quoteFilterValue(`%${escapeLikePattern(query)}%`);
+  return [
+    `name.ilike.${pattern}`,
+    `metadata->>tags.ilike.${pattern}`,
+    `metadata->>genres.ilike.${pattern}`,
+  ].join(',');
+}
+
 export function createGameRepository(
   client: AppSupabaseClient,
 ): GameRepository {
@@ -162,19 +172,13 @@ export function createGameRepository(
     },
 
     async search({ query, source, limit }) {
-      const pattern = quoteFilterValue(`%${escapeLikePattern(query)}%`);
       const base = client
         .from('games')
-        .select('id, source, steam_appid, name, metadata')
-        .or(
-          [
-            `name.ilike.${pattern}`,
-            `metadata->>tags.ilike.${pattern}`,
-            `metadata->>genres.ilike.${pattern}`,
-          ].join(','),
-        );
+        .select('id, source, steam_appid, name, metadata');
+      const matching =
+        query === undefined ? base : base.or(nameOrTagFilter(query));
       const outcome = await (
-        source === 'all' ? base : base.eq('source', source)
+        source === 'all' ? matching : matching.eq('source', source)
       )
         .order('name')
         .limit(limit);

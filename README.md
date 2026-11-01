@@ -65,18 +65,18 @@ STEAM_ID=76561198000000000
 
 ## Tools
 
-| Tool                 | Qué hace                                                                      |
-| -------------------- | ----------------------------------------------------------------------------- |
-| `sync_library`       | Trae tus juegos de Steam (upsert; seguro de re-ejecutar)                      |
-| `review_game`        | Guarda una reseña (rank 0-100 y tags opcionales)                              |
-| `edit_review`        | Cambia texto, rank o tags de una reseña                                       |
-| `delete_review`      | Borra una reseña (soft delete)                                                |
-| `list_my_games`      | Lista tu biblioteca; filtra jugados/no jugados, ordena por nombre/horas/fecha |
-| `search_games`       | Busca en el catálogo por nombre, tag o género                                 |
-| `add_manual_game`    | Agrega un juego no-Steam al catálogo                                          |
-| `delete_game`        | Borra un juego con su biblioteca y reseñas (pide confirmación)                |
-| `recommend_purchase` | Recomienda compras según tu perfil; consulta la Steam Store                   |
-| `rank_games`         | Ordena una lista que traés (ports VR, emuladores…) según tu perfil            |
+| Tool                 | Qué hace                                                                             |
+| -------------------- | ------------------------------------------------------------------------------------ |
+| `sync_library`       | Trae tus juegos de Steam (upsert; seguro de re-ejecutar)                             |
+| `review_game`        | Guarda una reseña (rank 0-100 y tags opcionales)                                     |
+| `edit_review`        | Cambia texto, rank o tags de una reseña                                              |
+| `delete_review`      | Borra una reseña (soft delete)                                                       |
+| `list_my_games`      | Lista tu biblioteca; filtra jugados/no jugados, ordena por nombre/horas/fecha        |
+| `search_games`       | Busca por nombre, tag o género; sin texto lista todo (`source: manual`: lo no-Steam) |
+| `add_manual_game`    | Agrega un juego no-Steam al catálogo                                                 |
+| `delete_game`        | Borra un juego con su biblioteca y reseñas (pide confirmación)                       |
+| `recommend_purchase` | Recomienda compras según tu perfil; consulta la Steam Store                          |
+| `rank_games`         | Ordena una lista que traés (ports VR, emuladores…) según tu perfil                   |
 
 Jobs (solo con `NODE_ENV=production` o `MCP_CRON_ENABLED=true`, y mientras el cliente MCP tenga el server abierto):
 sync diario a las 04:00 y backup de reseñas los domingos a las 03:00 en
