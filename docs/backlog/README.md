@@ -9,14 +9,15 @@ Backlog estructurado del proyecto. Generado desde `../_CONCEPTO.md` (single-user
 
 ## Fases
 
-| Fase                                  | Nombre                    | Status        | Tareas | Fuente               |
-| ------------------------------------- | ------------------------- | ------------- | ------ | -------------------- |
-| [FASE_0](./FASE_0_LIMPIEZA.md)        | Limpieza de scaffold      | ✅ COMPLETA   | 7      | residuo template-mcp |
-| [FASE_1](./FASE_1_MVP.md)             | MVP funcional             | 🟡 CON DOBLES | 8      | concepto F1 (1-10)   |
-| [FASE_2](./FASE_2_RECOMENDACIONES.md) | Recomendaciones + edición | 🟡 CON DOBLES | 7      | concepto F2 (11-18)  |
-| [FASE_3](./FASE_3_POLISH.md)          | Polish + publicación      | 🟡 CON DOBLES | 5      | concepto F3 (19-23)  |
+| Fase                                   | Nombre                                 | Status                    | Tareas | Fuente               |
+| -------------------------------------- | -------------------------------------- | ------------------------- | ------ | -------------------- |
+| [FASE_0](./FASE_0_LIMPIEZA.md)         | Limpieza de scaffold                   | ✅ COMPLETA               | 7      | residuo template-mcp |
+| [FASE_1](./FASE_1_MVP.md)              | MVP funcional                          | 🟡 CON DOBLES             | 8      | concepto F1 (1-10)   |
+| [FASE_2](./FASE_2_RECOMENDACIONES.md)  | Recomendaciones + edición              | 🟡 CON DOBLES             | 7      | concepto F2 (11-18)  |
+| [FASE_3](./FASE_3_POLISH.md)           | Polish + publicación                   | 🟡 CON DOBLES             | 5      | concepto F3 (19-23)  |
+| [FASE_4](./FASE_4_UN_SOLO_SERVIDOR.md) | Un solo servidor (HTTP), reloj una vez | ⬜ PROPUESTA (2026-11-14) | 5      | Freddy 2026-11-14    |
 
-Total: **27 tareas** en 4 fases.
+Total: **32 tareas** en 5 fases.
 
 ## Diagramas de Referencia
 

@@ -38,11 +38,17 @@
         "flujos de docs/flows.md contra Supabase y Steam reales"
       ],
       "pending_owner": ["npm publish"]
+    },
+    "FASE_4": {
+      "status": "pending",
+      "tasks": 0,
+      "total": 5,
+      "name": "Un solo servidor (HTTP), reloj una vez"
     }
   },
   "totals": {
     "tasks_done": 27,
-    "tasks_total": 27
+    "tasks_total": 32
   },
   "meta": {
     "generated_at": "2026-07-25",
