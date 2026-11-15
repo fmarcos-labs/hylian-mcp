@@ -35,7 +35,7 @@
 
 **Pasos:**
 
-1. Registrar el server con `claude mcp add … -- npx -y @fmarcosdev/hylian-mcp` incluyendo `NODE_ENV=production` y las 5 variables.
+1. Registrar el server con `claude mcp add … -- node /ruta/absoluta/hylian-mcp/dist/main.js` (tras `pnpm build`; el `npx` espera a que se publique en npm) incluyendo `NODE_ENV=production` y las 5 variables.
 2. Abrir el cliente MCP; el server arranca por stdio.
 3. Pedir al LLM: "¿qué tools de hylian tenés?".
 

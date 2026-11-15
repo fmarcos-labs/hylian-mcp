@@ -27,14 +27,20 @@ claude mcp add --scope user hylian-mcp \
   --env USER_ID=... \
   --env STEAM_API_KEY=... \
   --env STEAM_ID=... \
-  -- npx -y @fmarcosdev/hylian-mcp
+  -- node /ruta/absoluta/hylian-mcp/dist/main.js
 ```
 
 `NODE_ENV=production` importa: oculta las tools de ejemplo (`greet`, `summarize`, `server-info`) y monta los
 jobs diarios/semanales. Sin él, el sync y el backup no corren solos.
 
-> El paquete todavía no está publicado en npm. Mientras tanto: clonar, `pnpm install`, `pnpm build` y usar
-> `node /ruta/absoluta/dist/main.js` como comando.
+Antes de registrarlo, clonar y compilar (`dist/main.js` sale de `pnpm build`):
+
+```bash
+git clone https://github.com/fmarcos-labs/hylian-mcp.git && cd hylian-mcp
+pnpm install && pnpm build
+```
+
+Cuando el paquete se publique en npm, el comando de arranque será `npx -y @fmarcosdev/hylian-mcp` en lugar de `node …/dist/main.js`.
 
 ## Configuración
 
@@ -124,7 +130,7 @@ paso 1).
 
 **Deploy en el Mac Mini** (`.github/workflows/deploy.yml`, runner self-hosted de `fmarcos-labs`): cuando CI pasa en
 un push a `master`, el runner actualiza el clon `~/apps/hylian-mcp`, levanta Supabase, aplica las migraciones y
-construye `hylian-mcp:local`. El `.env` de ese clon lo crea uno a mano (no está en el repo) y difiere del de
+construye `hylian-mcp:local` (el build usa `DOCKER_CONFIG=~/.docker-despliegue`, sin el `credsStore: desktop` que cuelga sin sesión gráfica; lo crea el deploy de grafo-tareas). El `.env` de ese clon lo crea uno a mano (no está en el repo) y difiere del de
 desarrollo en dos líneas: dentro de Docker `127.0.0.1` es el propio contenedor, así que la base se alcanza por el
 host, y la imagen trae `http` por defecto.
 

@@ -46,8 +46,15 @@ jobs:
             echo "→ $(basename "$f")"
             docker exec -i "$DB" psql -U postgres -v ON_ERROR_STOP=1 -q < "$f"
           done
+      # `credsStore: desktop` de ~/.docker/config.json cuelga el pull de node:22-alpine fuera de la sesión de Freddy (sin GUI).
+      # ~/.docker-despliegue lo crea el deploy de grafo-tareas: config sin ayudante, con los mismos plugins. La imagen base
+      # es pública. timeout corto: si vuelve a colgarse, que falle con log en vez de ocupar el runner 15 min.
       - name: Build de la imagen
-        run: docker build -t hylian-mcp:local "$APP_DIR"
+        timeout-minutes: 5
+        run: |
+          export DOCKER_CONFIG="$HOME/.docker-despliegue"
+          test -f "$DOCKER_CONFIG/config.json" || { echo "falta $DOCKER_CONFIG/config.json (lo crea el deploy de grafo-tareas)"; exit 1; }
+          docker build -t hylian-mcp:local "$APP_DIR"
       # Solo prueba que la imagen arranca por stdio y sale al cerrarse stdin: los servicios son lazy, así que
       # no toca Supabase ni Steam. MCP_TRANSPORT va explícito porque la imagen trae http por defecto.
       - name: Arranque de la imagen por stdio

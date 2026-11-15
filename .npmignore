@@ -18,4 +18,3 @@ coverage/
 Dockerfile
 .dockerignore
 skills-lock.json
-elevator_speech.md
